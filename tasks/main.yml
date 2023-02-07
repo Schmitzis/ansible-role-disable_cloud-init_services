@@ -12,6 +12,7 @@
   loop: "{{ cloud_init_services }}"
   loop_control:
     loop_var: service
+  notify: cloud_init_managed
   when:
     - 'not (ansible_distribution == "Ubuntu" and ansible_distribution_version == "14.04")'
     - 'ansible_facts.services[service] is defined'
@@ -31,3 +32,6 @@
     mode: '0644'
   when:
     - 'etc_cloud_folder.stat.exists'
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  ansible.builtin.meta: flush_handlers

@@ -1,0 +1,4 @@
+---
+- name: cloud_init_managed
+  ansible.builtin.set_fact:
+    cloud_init_managed: false
